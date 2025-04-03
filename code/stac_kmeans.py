@@ -1,4 +1,3 @@
-# %%
 import os
 import sys
 import tempfile
@@ -176,28 +175,6 @@ def get_less_cloudy_image(
 
             # Plot the image band
             if False:
-                # # downsample the image
-                # output_size = 500
-
-                # # Calculate scaling factor
-                # scale_factor = min(img.shape[0], img.shape[1]) / output_size
-                # out_shape = (
-                #     int(img.shape[0] / scale_factor),
-                #     int(img.shape[1] / scale_factor),
-                # )
-
-                # # Read the data at reduced resolution with resampling
-                # with rasterio.open(best_image.assets[asset_key].href) as src:
-                #     downsampled = src.read(
-                #         1,  # first band
-                #         window=window,
-                #         out_shape=out_shape,
-                #         resampling=rasterio.enums.Resampling.average,
-                #     )
-                # sref_wgs84 = rasterio.crs.CRS.from_epsg(EPSG)
-                # x, y = warp.transform(sref_wgs84, sref, [coords[0]], [coords[1]])
-                # row, col = rasterio.transform.rowcol(img.transform, x[0], y[0])
-
                 plt.imshow(img, cmap="Greys_r")
                 plt.scatter([col], [row], s=200, c="yellow", marker="+")
                 plt.axis("off")
@@ -440,7 +417,7 @@ def export_clusters(
 
 
 if __name__ == "__main__":
-    bbox = [-2.171453, 51.615590, -2.086653, 51.663530]
+    # Define the point of interest ! (npixels = number of pixels around that point)
     lon, lat = -2.130144, 51.632115
 
     with timer(f"{'-' * 10}\nGetting image"):
@@ -457,7 +434,6 @@ if __name__ == "__main__":
         image_array, image_bounds, sref = read_sentinel2(
             best_image, window, transform, plotimage=True
         )
-
     log_raster_info(best_image.assets["B08_10m"].href)
 
     with timer(f"{'-' * 10}\nClustering"):

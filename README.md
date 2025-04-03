@@ -1,4 +1,12 @@
 # Sentinel-2 cloud-optimized GeoTIFF clustering
+
+NOTE: This repository was downloaded and modified from [https://github.com/julionovoa/st-kmeans](https://github.com/julionovoa/st-kmeans). It was modified to work with the latest version of the libraries and to be compatible with the [Copernicus Data Space Ecosystem (CDSE)](https://dataspace.copernicus.eu/) [Sentinel-2 STAC catalog](https://radiantearth.github.io/stac-browser/#/external/catalogue.dataspace.copernicus.eu/stac/collections/SENTINEL-2).
+
+It was modified as part of the Cloud Geospatial 101 Capstone project.
+
+--- 
+Original README:
+
 ## Contents
 1. [Introduction](#1-introduction)
 2. [Installation](#2-installation)
