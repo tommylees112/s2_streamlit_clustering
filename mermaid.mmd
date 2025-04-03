@@ -31,8 +31,8 @@ flowchart TD
         S["Clusters GeoTIFF File"]
   end
     A --> B
-    B -- STAC API Request --> C
-    C -- Search Results --> B
+    B -- STAC API Request (Call) --> C
+    C -- Search Results (Receive) --> B
     B -- Select Least Cloudy --> D
     B -- Calculate Window & Transform --> E
     D --> F
@@ -59,3 +59,5 @@ flowchart TD
     style O fill:#ccf,stroke:#333,stroke-width:2px
     style Q fill:#ccf,stroke:#333,stroke-width:2px
     style S fill:#ccf,stroke:#333,stroke-width:2px
+
+
