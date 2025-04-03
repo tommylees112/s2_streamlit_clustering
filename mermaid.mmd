@@ -1,0 +1,61 @@
+---
+config:
+  layout: fixed
+---
+flowchart TD
+ subgraph subGraph0["STAC Search & Selection"]
+        A["Input: Coordinates - Lon, Lat, Date Range, Max Cloud Cover"]
+        B["get_less_cloudy_image"]
+        C{"Copernicus STAC API<br>stac.dataspace.copernicus.eu/v1"}
+        D["Best Image - pystac Item"]
+        E["Window & Transform Objects"]
+  end
+ subgraph subGraph1["Data Reading & Prep"]
+        F["Read Sentinel2"]
+        G{"COG Assets on Copernicus<br>e.g. B02, B03, B04, B08"}
+        H["Image Array - NumPy, bands x H x W"]
+        I["Image Bounds - Lon/Lat and Native CRS"]
+  end
+ subgraph subGraph2["Image Processing"]
+        J["Create RGB Composite"]
+        K["RGB Composite - NumPy, H x W x 3"]
+        L["Get Clusters"]
+        M["Clusters Array - NumPy, H x W"]
+  end
+ subgraph subGraph3["Analysis & Output"]
+        N["Get Areas"]
+        O["Areas DataFrame - Pandas"]
+        P["Show Folium Map"]
+        Q["Folium Map Object"]
+        R["Export Clusters"]
+        S["Clusters GeoTIFF File"]
+  end
+    A --> B
+    B -- STAC API Request --> C
+    C -- Search Results --> B
+    B -- Select Least Cloudy --> D
+    B -- Calculate Window & Transform --> E
+    D --> F
+    E --> F
+    F -- Request Specific Band URLs --> G
+    G -- Read Pixel Data within Window --> F
+    F -- Process Bands --> H
+    F -- Calculate Bounds & CRS --> I
+    H --> J & L
+    J -- Normalize & Stack Bands --> K
+    L -- Reshape & Scale --> L
+    L -- Apply KMeans --> M
+    M --> N & P & R
+    N -- Count Pixels & Convert --> O
+    I --> P
+    K -- Optional --> P
+    A -- Lon, Lat --> P
+    P -- Create Map Layers --> Q
+    I -- Native CRS --> R
+    E -- Transform --> R
+    R -- Write GeoTIFF --> S
+    style C fill:#f9f,stroke:#333,stroke-width:2px
+    style G fill:#f9f,stroke:#333,stroke-width:2px
+    style O fill:#ccf,stroke:#333,stroke-width:2px
+    style Q fill:#ccf,stroke:#333,stroke-width:2px
+    style S fill:#ccf,stroke:#333,stroke-width:2px
